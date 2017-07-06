@@ -28,6 +28,11 @@ namespace PeggyTheGameApp.src.GameObjects
             _inventory.Add(i);
         }
 
+        public void RemoveItemFromInventory(Item i)
+        {
+            _inventory.Remove(i);
+        }
+
         public string Look()
         {
             return CurrentRoom.Look();
@@ -65,6 +70,50 @@ namespace PeggyTheGameApp.src.GameObjects
                 return $"{itemName} has been added to your inventory.\r\n";
             }
             return $"{takeFrom} doesn't have {itemName}.\r\n";
+        }
+
+        public string DropItemIn(string itemName, string dropIn)
+        {
+            // Check we have the item in our Inventory
+            Item matchItem = _inventory.Find(i => i.Name.ToLower().Equals(itemName.ToLower()));
+            if (matchItem == null)
+            {
+                return $"There's nothing in your inventory called {itemName}.\r\n";
+            }
+
+            // Check the room has a Container with the right name
+            Container matchContainer = CurrentRoom.GetContainerByName(dropIn);
+            if (matchContainer == null)
+            {
+                return $"You can't drop {itemName} in {dropIn}, {dropIn} isn't in here.\r\n";
+            }
+
+            RemoveItemFromInventory(matchItem);
+            matchContainer.AddItem(matchItem);
+            return $"Removed {itemName} from your inventory.\r\n";
+        }
+
+        public string GiveItemTo(string itemName, string giveTo)
+        {
+            // TODO: suspiciously similar to DropItemIn() - needs a refactor.
+
+            // Check we have the item in our Inventory
+            Item matchItem = _inventory.Find(i => i.Name.ToLower().Equals(itemName.ToLower()));
+            if (matchItem == null)
+            {
+                return $"There's nothing in your inventory called {itemName}.\r\n";
+            }
+
+            // Check the room has a Container with the right name
+            Character matchContainer = CurrentRoom.GetCharacterByName(giveTo);
+            if (matchContainer == null)
+            {
+                return $"You can't give {itemName} to {giveTo}, {giveTo} isn't in here.\r\n";
+            }
+
+            RemoveItemFromInventory(matchItem);
+            matchContainer.AddItem(matchItem);
+            return $"Removed {itemName} from your inventory.\r\n";
         }
     }
 }

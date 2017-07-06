@@ -33,6 +33,8 @@ namespace PeggyTheGameApp.src
                     return HandleTake(origTokens);
                 case "drop":
                     return HandleDrop(origTokens);
+                case "give":
+                    return HandleGive(origTokens);
                 default:
                     return "Use your words.\r\n";
             }
@@ -91,7 +93,7 @@ namespace PeggyTheGameApp.src
 
             string item = "";
             string takeFrom = "";
-            int fromIndex = Array.IndexOf(tokens, "from");
+            int fromIndex = Array.FindIndex(tokens, t => t.ToLower().Equals("from"));
             for (int i=1; i<fromIndex; i++)
             {
                 item += $"{tokens[i]} ";
@@ -115,8 +117,58 @@ namespace PeggyTheGameApp.src
 
         private string HandleDrop(string[] tokens)
         {
-            // TODO
-            return "Dropping\r\n";
+            // TODO: looks supsiciously similar to HandleTake() and HandleGive(),
+            //       refactor these into a shared method.
+            const string helpText = "Try \"drop (thing) in (place)\".";
+            if (tokens.Length < 4 || !tokens.Contains("in"))
+            {
+                return $"I need some more information. {helpText}\r\n";
+            }
+
+            string item = "";
+            string dropIn = "";
+            int inIndex = Array.FindIndex(tokens, t => t.ToLower().Equals("in"));
+            for (int i=1; i<inIndex; i++)
+            {
+                item += $"{tokens[i]} ";
+            }
+            item = item.TrimEnd();
+
+            for (int i=inIndex+1; i<tokens.Length; i++)
+            {
+                dropIn += $"{tokens[i]} ";
+            }
+            dropIn = dropIn.TrimEnd();
+
+            return _world.DropItemIn(item, dropIn);
+        }
+
+        private string HandleGive(string[] tokens)
+        {
+            // TODO: looks supsiciously similar to HandleTake() and HandleGive(),
+            //       refactor these into a shared method.
+            const string helpText = "Try \"give (thing) to (person)\".";
+            if (tokens.Length < 4 || !tokens.Contains("to"))
+            {
+                return $"I need some more information. {helpText}\r\n";
+            }
+
+            string item = "";
+            string giveTo = "";
+            int inIndex = Array.FindIndex(tokens, t => t.ToLower().Equals("to"));
+            for (int i = 1; i < inIndex; i++)
+            {
+                item += $"{tokens[i]} ";
+            }
+            item = item.TrimEnd();
+
+            for (int i = inIndex + 1; i < tokens.Length; i++)
+            {
+                giveTo += $"{tokens[i]} ";
+            }
+            giveTo = giveTo.TrimEnd();
+
+            return _world.GiveItemTo(item, giveTo);
         }
     }
 }

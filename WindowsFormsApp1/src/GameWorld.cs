@@ -89,5 +89,15 @@ namespace PeggyTheGameApp.src
         {
             return _peggy.TakeItemFrom(itemName, takeFrom);
         }
+
+        public string DropItemIn(string itemName, string dropIn)
+        {
+            return _peggy.DropItemIn(itemName, dropIn);
+        }
+
+        public string GiveItemTo(string itemName, string giveTo)
+        {
+            return _peggy.GiveItemTo(itemName, giveTo);
+        }
     }
 }
