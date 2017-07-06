@@ -1,0 +1,359 @@
+﻿{
+  "map": {
+    "front-porch": {
+      "is-start-room":  true,
+      "friendly-name": "Front Porch",
+      "description": "A run-down awning with flickering light and chipped-paint door.",
+      "containers": [],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {},
+        "east": {},
+        "south": {
+          "id": "coat-room",
+          "requires": ""
+        },
+        "west": {}
+      }
+    },
+    "coat-room": {
+      "friendly-name": "Coat Room",
+      "description": "A small room with coats covering both walls.",
+      "containers": [],
+      "characters": [
+        {
+          "name": "Archibald",
+          "description": "A hulking giant of a woman with frazzled hair.",
+          "response": "You look like you could do with some help. Here - have a key.",
+          "items": [
+            {
+              "id": "glittery-key",
+              "name": "The Glittery Key",
+              "description": "A glitter-covered key with seizure-inducing sparkliness.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "adjoining-rooms": {
+        "north": {
+          "id": "front-porch",
+          "requires": ""
+        },
+        "east": {
+          "id": "kitchen",
+          "requires": ""
+        },
+        "south": {
+          "id": "hall",
+          "requires": ""
+        },
+        "west": {}
+      }
+    },
+    "kitchen": {
+      "friendly-name": "Kitchen",
+      "description": "A farm-style kitchen with strange hooks hanging from the ceiling.",
+      "containers": [
+        {
+          "name": "Pantry",
+          "description": "A walk-in pantry filled mostly with 1950s-era tinned corn.",
+          "requires": "",
+          "items": [
+            {
+              "id": "article-5",
+              "name": "Article - bottom right corner",
+              "description": "The bottom right corner of the missing article.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {},
+        "east": {
+          "id": "dining-room",
+          "requires": ""
+        },
+        "south": {},
+        "west": {
+          "id": "coat-room",
+          "requires": ""
+        }
+      }
+    },
+    "dining-room": {
+      "friendly-name": "Dining Room",
+      "description": "A lavish room with enough space for twenty guests. The table has been hastily abandoned.",
+      "containers": [],
+      "characters": [
+        {
+          "name": "BJ Bear",
+          "description": "An overenthustiastic giant bear carrying a suitcase with 'Magic' written on the side.",
+          "response": "I've been dying to get rid of this rusty old key, but only in return for some kind of eccentric woodwind instrument.",
+          "items": [
+            {
+              "id": "rusty-key",
+              "friendly-name": "The Rusty Key",
+              "description": "A tiny, old, rusty key with an indecipherable description on it.",
+              "requires": "bassoon"
+            }
+          ]
+        }
+      ],
+      "adjoining-rooms": {
+        "north": {},
+        "east": {},
+        "south": {
+          "id": "living-room",
+          "requires": ""
+        },
+        "west": {
+          "id": "kitchen",
+          "requires": ""
+        }
+      }
+    },
+    "living-room": {
+      "friendly-name": "Living Room",
+      "description": "A moderately sized square room littered with abandoned TV sets and cigar stubs.",
+      "containers": [
+        {
+          "name": "TV Cabinet",
+          "description": "A faux-modern oversized TV cabinet covered in suspicious scratches.",
+          "requires": "",
+          "items": [
+            {
+              "id": "article-3",
+              "name": "Article - left edge",
+              "description": "The left edge of the missing article.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {
+          "id": "dining-room",
+          "requires": ""
+        },
+        "east": {
+          "id": "back-yard",
+          "requires": ""
+        },
+        "south": {},
+        "west": {}
+      }
+    },
+    "back-yard": {
+      "friendly-name": "Back Yard",
+      "description": "A field of long grass, except for a large mown-out shape in the middle that seems to represent Elvis.",
+      "containers": [],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {},
+        "east": {},
+        "south": {
+          "id": "shed",
+          "requires": "rusty-key"
+        },
+        "west": {
+          "id": "living-room",
+          "requires": ""
+        }
+      }
+    },
+    "shed": {
+      "friendly-name": "Garden Shed",
+      "description": "A typical garden shed with automatic doors and a chandelier inside.",
+      "containers": [
+        {
+          "name": "Toolbox",
+          "description": "A freshly-painted toolbox. The lock's broken and lid ajar.",
+          "requires": "",
+          "items": [
+            {
+              "id": "iron-key",
+              "name": "The Iron Key",
+              "description": "A carefully hand-forged key of iron, warm to the touch.",
+              "requires": ""
+            }
+          ]
+        },
+        {
+          "name": "Shelves",
+          "description": "A set of shelves 5 high. There's something hastily hidden on the top shelf.",
+          "requires": "",
+          "items": [
+            {
+              "id": "article-1",
+              "name": "Article - top left corner",
+              "description": "The top left corner of the missing article.",
+              "requires": ""
+            },
+            {
+              "id": "orb-of-business-speak",
+              "name": "Orb of Business-Speak",
+              "description": "A magical orb, giving the bearer the ability to speak of Synergy and Action-Items without a hint of remorse.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {
+          "id": "back-yard",
+          "requires": ""
+        },
+        "east": {},
+        "south": {},
+        "west": {}
+      }
+    },
+    "hall": {
+      "friendly-name": "Hallway",
+      "description": "A dimly-lit, moderately disgusting hall. They say the hallway is like the colon of the house.",
+      "containers": [
+        {
+          "name": "Sideboard",
+          "description": "An beautifully polished antique sideboard.",
+          "requires": "iron-key",
+          "items": [
+            {
+              "id": "bassoon",
+              "name": "A Bassoon",
+              "description": "A cheap bassoon carved out of coconut husks.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {
+          "id": "coat-room",
+          "requires": ""
+        },
+        "east": {},
+        "south": {
+          "id": "study",
+          "requires": ""
+        },
+        "west": {}
+      }
+    },
+    "study": {
+      "friendly-name": "Study",
+      "description": "A teetering bookshelf full of leather volumes shadows over a well-appointed armchair and desk.",
+      "containers": [
+        {
+          "name": "Desk",
+          "description": "A whopping great big business desk painted bright green.",
+          "requires": "glittery-key",
+          "items": [
+            {
+              "id": "article-4",
+              "name": "Article - bottom left corner",
+              "description": "The bottom left corner of the missing article.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {
+          "id": "hall",
+          "requires": ""
+        },
+        "east": {
+          "id": "bedroom",
+          "requires": ""
+        },
+        "south": {},
+        "west": {}
+      }
+    },
+    "bedroom": {
+      "friendly-name": "Bedroom",
+      "description": "A cosy bedroom straight out of a goth-themed B&B catalogue.",
+      "containers": [
+        {
+          "name": "Drawers",
+          "description": "A naval-looking set of drawers, complete with parrot insignia.",
+          "requires": "",
+          "items": []
+        },
+        {
+          "name": "Ottoman",
+          "description": "A comfortable ottoman covered in a thick, dreadlocked, purple carpet.",
+          "requires": "",
+          "items": [
+            {
+              "id": "article-2",
+              "name": "Article - top right corner",
+              "description": "The upper right corner of the missing article.",
+              "requires": ""
+            }
+          ]
+        }
+      ],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {},
+        "east": {},
+        "south": {
+          "id": "secret-closet",
+          "requires": ""
+        },
+        "west": {
+          "id": "study",
+          "requires": ""
+        }
+      }
+    },
+    "secret-closet": {
+      "friendly-name": "Secret Closet",
+      "description": "A small doorway leads to a cavernous opening, lined on both sides by Air Jordans.",
+      "containers": [],
+      "characters": [],
+      "adjoining-rooms": {
+        "north": {
+          "id": "bedroom",
+          "requires": ""
+        },
+        "east": {},
+        "south": {
+          "id": "annex-of-evil",
+          "requires": "glittery-key"
+        },
+        "west": {}
+      }
+    },
+    "annex-of-evil": {
+      "friendly-name": "Annex of Evil",
+      "description":  "Finally, something interesting. It's obvious Bronies have been here.",
+      "containers": [],
+      "characters": [
+        {
+          "name": "Dr. Beaverman",
+          "description": "A steampunk marvel of a being, with smoke pouring from under his lab coat and glowing green ears.",
+          "response": "The only way you'll ever leave is if you hand over the entire article!",
+          "items": []
+        }
+      ],
+      "adjoining-rooms": {
+        "north": {
+          "id": "secret-closet",
+          "requires": ""
+        },
+        "east": {},
+        "south": {},
+        "west": {}
+      }
+    }
+  }
+}
