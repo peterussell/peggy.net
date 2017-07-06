@@ -38,7 +38,7 @@ namespace PeggyTheGameApp.tests
             Item i = new Item(id, name, desc);
             Character c = new Character("a", "b");
             c.AddItem(i);
-            Item i2 = c.GetItem(id);
+            Item i2 = c.RemoveItem(id);
             Assert.Equal(i, i2);
             Assert.False(c.HasItems());
         }
@@ -63,7 +63,7 @@ namespace PeggyTheGameApp.tests
             Assert.Equal("You look like you could do with some help, here - have a key.", c.TalkTo());
             Assert.True(c.HasItems());
 
-            Item i = c.GetItem("article-3");
+            Item i = c.RemoveItem("article-3");
             Assert.NotNull(i);
             Assert.Equal("article-3", i.Id);
             Assert.Equal("Article - left edge", i.Name);

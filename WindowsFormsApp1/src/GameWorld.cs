@@ -84,5 +84,10 @@ namespace PeggyTheGameApp.src
         {
             return _peggy.TalkToCharacter(characterName);
         }
+
+        public string TakeItemFrom(string itemName, string takeFrom)
+        {
+            return _peggy.TakeItemFrom(itemName, takeFrom);
+        }
     }
 }

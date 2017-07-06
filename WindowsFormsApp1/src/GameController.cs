@@ -19,15 +19,20 @@ namespace PeggyTheGameApp.src
 
         public string HandleCommand(string cmd)
         {
-            string[] tokens = cmd.ToLower().Split(' ');
-            switch (tokens[0])
+            string[] origTokens = cmd.Split(' ');
+            string[] lowerTokens = cmd.ToLower().Split(' ');
+            switch (lowerTokens[0])
             {
                 case "go":
-                    return HandleGo(tokens);
+                    return HandleGo(origTokens);
                 case "look":
-                    return HandleLook(tokens);
+                    return HandleLook(origTokens);
                 case "talk":
-                    return HandleTalk(tokens);
+                    return HandleTalk(origTokens);
+                case "take":
+                    return HandleTake(origTokens);
+                case "drop":
+                    return HandleDrop(origTokens);
                 default:
                     return "Use your words.\r\n";
             }
@@ -51,7 +56,7 @@ namespace PeggyTheGameApp.src
                         string containerName = "";
                         for (int i = 2; i < tokens.Length; i++)
                         {
-                            containerName += tokens[i] + " ";
+                            containerName += $"{tokens[i]} ";
                         }
                         return _world.LookInContainer(containerName.TrimEnd());
                     }
@@ -69,11 +74,49 @@ namespace PeggyTheGameApp.src
                 string characterName = "";
                 for (int i = 2; i < tokens.Length; i++)
                 {
-                    characterName += tokens[i] + " ";
+                    characterName += $"{tokens[i]} ";
                 }
                 return _world.TalkToCharacter(characterName.TrimEnd());
             }
             return "Who do you want to talk to?\r\n";
+        }
+
+        private string HandleTake(string[] tokens)
+        {
+            const string helpText = "Try \"take (thing) from (place)\".";
+            if (tokens.Length < 4 || !tokens.Contains("from"))
+            {
+                return $"I need some more information. {helpText}\r\n";
+            }
+
+            string item = "";
+            string takeFrom = "";
+            int fromIndex = Array.IndexOf(tokens, "from");
+            for (int i=1; i<fromIndex; i++)
+            {
+                item += $"{tokens[i]} ";
+            }
+            item = item.TrimEnd();
+
+            if (fromIndex + 1 == tokens.Length)
+            {
+                // No container specified after 'from'
+                return $"Where do you want to take {item} from? {helpText}\r\n";
+            }
+
+            for (int i=fromIndex+1; i<tokens.Length; i++)
+            {
+                takeFrom += $"{tokens[i]} ";
+            }
+            takeFrom = takeFrom.TrimEnd();
+
+            return _world.TakeItemFrom(item, takeFrom);
+        }
+
+        private string HandleDrop(string[] tokens)
+        {
+            // TODO
+            return "Dropping\r\n";
         }
     }
 }

@@ -157,12 +157,22 @@ namespace PeggyTheGameApp.src.GameObjects
                 return charNotFoundText;
             }
 
-            Character match = _characters.Find(c => c.Name.ToLower().Equals(characterName));
+            Character match = _characters.Find(c => c.Name.ToLower().Equals(characterName.ToLower()));
             if (match == null)
             {
                 return charNotFoundText;
             }
             return match.TalkTo();
+        }
+
+        public Container GetContainerByName(string containerName)
+        {
+            return _containers.Find(c => c.Name.ToLower().Equals(containerName.ToLower()));
+        }
+
+        public Character GetCharacterByName(string characterName)
+        {
+            return _characters.Find(c => c.Name.ToLower().Equals(characterName.ToLower()));
         }
 
         public void AddAdjoiningRoom(string direction, string id, string requiresId="")

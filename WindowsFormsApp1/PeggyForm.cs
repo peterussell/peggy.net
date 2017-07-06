@@ -1,4 +1,5 @@
 ﻿using PeggyTheGameApp.src;
+using PeggyTheGameApp.src.Global;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace PeggyTheGameApp
 
             cmdInput.Text = "";
             outputText.AppendText($" > {cmd}\r\n");
-            outputText.AppendText(_gc.HandleCommand(cmd));
+            outputText.AppendText(Utils.Capitalize(_gc.HandleCommand(cmd)));
         }
     }
 }
