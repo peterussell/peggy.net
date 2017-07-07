@@ -19,18 +19,41 @@ namespace PeggyTheGameApp.src.GameObjects
 
         public string SetCurrentRoom(Room newRoom)
         {
-            CurrentRoom = newRoom;
+            CurrentRoom = newRoom ?? throw new ArgumentNullException("newRoom");
             return $"Moved to the {CurrentRoom.FriendlyName}.\r\n";
         }
 
-        public void AddItemToInventory(Item i)
+        public void AddItemToInventory(Item item)
         {
-            _inventory.Add(i);
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+            _inventory.Add(item);
+        }
+
+        public Item RemoveItemFromInventoryById(string itemId)
+        {
+            Item match = _inventory.Find(i => i.Id.ToLower().Equals(itemId.ToLower()));
+            if (match != null)
+            {
+                _inventory.Remove(match);
+            }
+            return match;
         }
 
         public void RemoveItemFromInventory(Item i)
         {
             _inventory.Remove(i);
+        }
+
+        public bool InventoryHasItems()
+        {
+            if (_inventory == null || _inventory.Count == 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         public string Look()
