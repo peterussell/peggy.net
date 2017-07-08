@@ -97,6 +97,14 @@ namespace PeggyTheGameApp.src.GameObjects
 
         public string DropItemIn(string itemName, string dropIn)
         {
+            if (string.IsNullOrEmpty(itemName))
+            {
+                throw new ArgumentException("itemName");
+            }
+            if (string.IsNullOrEmpty(dropIn))
+            {
+                throw new ArgumentException("dropIn");
+            }
             // Check we have the item in our Inventory
             Item matchItem = _inventory.Find(i => i.Name.ToLower().Equals(itemName.ToLower()));
             if (matchItem == null)
@@ -119,6 +127,14 @@ namespace PeggyTheGameApp.src.GameObjects
         public string GiveItemTo(string itemName, string giveTo)
         {
             // TODO: suspiciously similar to DropItemIn() - needs a refactor.
+            if (string.IsNullOrEmpty(itemName))
+            {
+                throw new ArgumentException("itemName");
+            }
+            if (string.IsNullOrEmpty(giveTo))
+            {
+                throw new ArgumentException("dropIn");
+            }
 
             // Check we have the item in our Inventory
             Item matchItem = _inventory.Find(i => i.Name.ToLower().Equals(itemName.ToLower()));

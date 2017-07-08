@@ -115,5 +115,159 @@ namespace PeggyTheGameApp.tests
                                " - Test Container\r\n - Test Character\r\n";
             Assert.Equal(expected, res);
         }
+
+        [Fact]
+        public void TestTakeItemFromContainer()
+        {
+            Room r = _testRoom;
+            Container c = _testContainer;
+            Item i = _goodTestItem;
+
+            c.AddItem(i);
+            r.AddContainer(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            string res = p.TakeItemFrom(i.Name, c.Name);
+            string expected = $"{i.Name} has been added to your inventory.\r\n";
+            Assert.Equal(expected, res);
+            Assert.True(p.InventoryHasItems());
+        }
+
+        // TODO: take item from *container* with invalid item
+        // TODO: take item from *container* with invalid container
+
+        [Fact]
+        public void TestTakeItemFromCharacter()
+        {
+            Room r = _testRoom;
+            Character c = _testCharacter;
+            Item i = _goodTestItem;
+
+            c.AddItem(i);
+            r.AddCharacter(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            string res = p.TakeItemFrom(i.Name, c.Name);
+            string expected = $"{i.Name} has been added to your inventory.\r\n";
+            Assert.Equal(expected, res);
+            Assert.True(p.InventoryHasItems());
+        }
+
+        // TODO: take item from *character* with invalid item
+        // TODO: take item from *characteR* with invalid character
+
+        [Fact]
+        public void TestDropItemIn()
+        {
+            Room r = _testRoom;
+            Container c = _testContainer;
+            r.AddContainer(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            Item i = _goodTestItem;
+            p.AddItemToInventory(i);
+
+            string res = p.DropItemIn(i.Name, c.Name);
+            string expected = $"Removed {i.Name} from your inventory.\r\n";
+            Assert.Equal(expected, res);
+            Assert.False(p.InventoryHasItems());
+        }
+
+        [Fact]
+        public void TestDropInWithInvalidItem()
+        {
+            Room r = _testRoom;
+            Container c = _testContainer;
+            r.AddContainer(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            Item i = _goodTestItem;
+            p.AddItemToInventory(i);
+
+            string res = p.DropItemIn("shitty name", c.Name);
+            string expected = $"There's nothing in your inventory called shitty name.\r\n";
+            Assert.Equal(expected, res);
+            Assert.True(p.InventoryHasItems());
+        }
+
+        [Fact]
+        public void TestDropItemInWithNullItem()
+        {
+            Room r = _testRoom;
+            Container c = _testContainer;
+            r.AddContainer(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            Item i = _goodTestItem;
+            p.AddItemToInventory(i);
+
+            Assert.Throws<ArgumentException>(() => p.DropItemIn(null, c.Name));
+            Assert.True(p.InventoryHasItems());
+        }
+
+        [Fact]
+        public void TestGiveItemTo()
+        {
+            Room r = _testRoom;
+            Character c = _testCharacter;
+            r.AddCharacter(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            Item i = _goodTestItem;
+            p.AddItemToInventory(i);
+
+            string res = p.GiveItemTo(i.Name, c.Name);
+            string expected = $"Removed {i.Name} from your inventory.\r\n";
+            Assert.Equal(expected, res);
+            Assert.False(p.InventoryHasItems());
+        }
+
+        [Fact]
+        public void TestGiveItemToWithInvalidItem()
+        {
+            Room r = _testRoom;
+            Character c = _testCharacter;
+            r.AddCharacter(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            Item i = _goodTestItem;
+            p.AddItemToInventory(i);
+
+            string res = p.GiveItemTo("shitty name", c.Name);
+            string expected = $"There's nothing in your inventory called shitty name.\r\n";
+            Assert.Equal(expected, res);
+            Assert.True(p.InventoryHasItems());
+        }
+
+        [Fact]
+        public void TestGiveItemToWithNullItem()
+        {
+            Room r = _testRoom;
+            Character c = _testCharacter;
+            r.AddCharacter(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+
+            Item i = _goodTestItem;
+            p.AddItemToInventory(i);
+
+            Assert.Throws<ArgumentException>(() => p.GiveItemTo(null, c.Name));
+            Assert.True(p.InventoryHasItems());
+        }
     }
 }
