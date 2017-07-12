@@ -56,6 +56,12 @@ namespace PeggyTheGameApp.src.GameObjects
             return true;
         }
 
+        public bool InventoryHasItem(string itemId)
+        {
+            Item match = _inventory.Find(i => i.Id.ToLower().Equals(itemId.ToLower()));
+            return match != null;
+        }
+
         public string Look()
         {
             return CurrentRoom.Look();

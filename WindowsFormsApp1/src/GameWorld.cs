@@ -13,14 +13,14 @@ namespace PeggyTheGameApp.src
 {
     public class GameWorld
     {
-        private Peggy _peggy;
+        public Peggy Peggy { get; private set; }
         private Dictionary<string, Room> _rooms;
         private string _startRoomId;
 
         public GameWorld()
         {
             _rooms = new Dictionary<string, Room>();
-            _peggy = new Peggy();
+            Peggy = new Peggy();
         }
 
         public void LoadMapFromJson(string path)
@@ -44,7 +44,29 @@ namespace PeggyTheGameApp.src
             }
 
             // Put Peggy in the start location
-            _peggy.SetCurrentRoom(_rooms[_startRoomId]);
+            Peggy.SetCurrentRoom(_rooms[_startRoomId]);
+        }
+
+        public void MovePeggyToRoom(Room newRoom)
+        {
+            if (!_rooms.ContainsKey(newRoom.Id))
+            {
+                throw new InvalidOperationException($"{newRoom.FriendlyName} does not exist in this map.");
+            }
+            Peggy.SetCurrentRoom(newRoom);
+        }
+
+        public void AddRoom(string roomId, Room room)
+        {
+            if (string.IsNullOrEmpty(roomId))
+            {
+                throw new ArgumentException("AddRoom() missing roomId argument.");
+            }
+            if (room == null)
+            {
+                throw new ArgumentNullException("AddRoom() missing room argument.");
+            }
+            _rooms.Add(roomId, room);
         }
 
         public string MovePeggy(string direction)
@@ -55,7 +77,7 @@ namespace PeggyTheGameApp.src
                 return $"{Utils.Capitalize(direction)}? What kind of bonkers direction is that?!\r\n";
             }
 
-            AdjoiningRoom ar = _peggy.CurrentRoom.GetAdjoiningRoom(d);
+            AdjoiningRoom ar = Peggy.CurrentRoom.GetAdjoiningRoom(d);
             if (ar == null)
             {
                 return $"There is nothing to the {Utils.Capitalize(direction)}.\r\n";
@@ -65,39 +87,58 @@ namespace PeggyTheGameApp.src
                 throw new InvalidOperationException($"The adjoining room {ar.Id} is not in the list of rooms.");
             }
 
+            // New room exists, get the new room object so we have access to all the properties.
+            Room newRoom = _rooms[ar.Id];
+
+            if (!string.IsNullOrEmpty(ar.RequiresId))
+            {
+                if (!Peggy.InventoryHasItem(ar.RequiresId))
+                {
+                    // TODO: we should print the Friendly name for the item, but iterating
+                    // through all rooms and items is a slow way. We could build a Dictionary
+                    // of item ID -> item Name mappings when we parse the map.
+                    return $"The {ar.RequiresId} is required to get into the {newRoom.FriendlyName}.\r\n";
+                }
+                else
+                {
+                    Item requiredItem = Peggy.RemoveItemFromInventoryById(ar.RequiresId);
+                    ar.SatisfyRequiredItem(requiredItem);
+                }
+            }
+
             // TODO: if there are required items, check Peggy has them before allowing the transition.
 
-            return _peggy.SetCurrentRoom(_rooms[ar.Id]);
+            return Peggy.SetCurrentRoom(newRoom);
         }
 
         public string Look()
         {
-            return _peggy.Look();
+            return Peggy.Look();
         }
 
         public string LookInContainer(string containerName)
         {
-            return _peggy.LookInContainer(containerName);
+            return Peggy.LookInContainer(containerName);
         }
 
         public string TalkToCharacter(string characterName)
         {
-            return _peggy.TalkToCharacter(characterName);
+            return Peggy.TalkToCharacter(characterName);
         }
 
         public string TakeItemFrom(string itemName, string takeFrom)
         {
-            return _peggy.TakeItemFrom(itemName, takeFrom);
+            return Peggy.TakeItemFrom(itemName, takeFrom);
         }
 
         public string DropItemIn(string itemName, string dropIn)
         {
-            return _peggy.DropItemIn(itemName, dropIn);
+            return Peggy.DropItemIn(itemName, dropIn);
         }
 
         public string GiveItemTo(string itemName, string giveTo)
         {
-            return _peggy.GiveItemTo(itemName, giveTo);
+            return Peggy.GiveItemTo(itemName, giveTo);
         }
     }
 }

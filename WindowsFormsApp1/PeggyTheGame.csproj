@@ -81,6 +81,7 @@
     <Compile Include="src\GameWorld.cs" />
     <Compile Include="src\Global\Enums.cs" />
     <Compile Include="src\Global\Utils.cs" />
+    <Compile Include="tests\GameWorldTests.cs" />
     <Compile Include="tests\PeggyTests.cs" />
     <Compile Include="tests\CharacterTests.cs" />
     <Compile Include="tests\ContainerTests.cs" />

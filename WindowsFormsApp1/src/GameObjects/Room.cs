@@ -218,10 +218,28 @@ namespace PeggyTheGameApp.src.GameObjects
         public string Id { get; private set; }
         public string RequiresId { get; private set; }
 
-        public AdjoiningRoom(string id, string requiresId)
+        public AdjoiningRoom(string id, string requiresId="")
         {
             Id = id;
             RequiresId = requiresId;
+        }
+
+        public void SatisfyRequiredItem(Item requiredItem)
+        {
+            if (string.IsNullOrEmpty(RequiresId))
+            {
+                throw new InvalidOperationException($"{Id} has no required item.");
+            }
+            if (requiredItem == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (!requiredItem.Id.ToLower().Equals(RequiresId.ToLower())) {
+                throw new InvalidOperationException($"{requiredItem.Id} isn't required by {Id}.");
+            }
+
+            // Valid item provided, remove the Required Item from this room.
+            RequiresId = "";
         }
     }
 }
