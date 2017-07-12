@@ -20,3 +20,4 @@ C:\Users\Pete\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\WindowsForm
 C:\Users\Pete\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\PeggyTheGame.exe
 C:\Users\Pete\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\PeggyTheGame.pdb
 C:\Users\Pete\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\PeggyTheGame.csprojResolveAssemblyReference.cache
+C:\Users\Pete\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\assets\icon.ico

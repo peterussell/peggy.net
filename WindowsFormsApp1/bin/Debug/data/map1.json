@@ -95,7 +95,7 @@
           "items": [
             {
               "id": "rusty-key",
-              "friendly-name": "The Rusty Key",
+              "name": "The Rusty Key",
               "description": "A tiny, old, rusty key with an indecipherable description on it.",
               "requires": "bassoon"
             }

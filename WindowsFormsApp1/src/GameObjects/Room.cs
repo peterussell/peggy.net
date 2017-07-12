@@ -116,10 +116,10 @@ namespace PeggyTheGameApp.src.GameObjects
 
         public string Look()
         {
-            string res = $"You are in the {FriendlyName}, ";
+            string res = $"You are in the {FriendlyName}. ";
             if (_containers.Count == 0 && _characters.Count == 0)
             {
-                return res += "which is devoid of anything interesting.\r\n";
+                return res += "It's devoid of anything interesting.\r\n";
             }
 
             res += "you see...\r\n";

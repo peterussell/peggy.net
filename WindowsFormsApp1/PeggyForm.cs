@@ -27,8 +27,10 @@ namespace PeggyTheGameApp
             if (string.IsNullOrWhiteSpace(cmd)) { return; }
 
             cmdInput.Text = "";
-            outputText.AppendText($" > {cmd}\r\n");
-            outputText.AppendText(Utils.Capitalize(_gc.HandleCommand(cmd)));
+
+            outputText.Text = outputText.Text.Insert(0, "\r\n");
+            outputText.Text = outputText.Text.Insert(0, Utils.Capitalize(_gc.HandleCommand(cmd)));
+            outputText.Text = outputText.Text.Insert(0, $" > {cmd}\r\n");
         }
     }
 }

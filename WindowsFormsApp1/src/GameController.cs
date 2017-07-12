@@ -42,6 +42,10 @@ namespace PeggyTheGameApp.src
 
         private string HandleGo(string[] tokens)
         {
+            if (tokens.Length < 2)
+            {
+                return "But, go where?\r\n";
+            }
             string direction = tokens[1];
             return _world.MovePeggy(direction);
         }
