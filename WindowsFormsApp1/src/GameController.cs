@@ -35,6 +35,8 @@ namespace PeggyTheGameApp.src
                     return HandleDrop(origTokens);
                 case "give":
                     return HandleGive(origTokens);
+                case "inventory":
+                    return HandleLookInInventory(origTokens);
                 default:
                     return "Use your words.\r\n";
             }
@@ -173,6 +175,11 @@ namespace PeggyTheGameApp.src
             giveTo = giveTo.TrimEnd();
 
             return _world.GiveItemTo(item, giveTo);
+        }
+
+        private string HandleLookInInventory(string[] tokens)
+        {
+            return _world.LookInInventory();
         }
     }
 }

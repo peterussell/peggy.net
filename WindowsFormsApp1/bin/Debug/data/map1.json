@@ -24,7 +24,7 @@
         {
           "name": "Archibald",
           "description": "A hulking giant of a woman with frazzled hair.",
-          "response": "You look like you could do with some help. Here - have a key.",
+          "response": "I've been waiting for you. I have a glittery key which may be of some use to you.",
           "items": [
             {
               "id": "glittery-key",
@@ -157,7 +157,7 @@
         "east": {},
         "south": {
           "id": "shed",
-          "requires": "rusty-key"
+          "requires": "glittery-key"
         },
         "west": {
           "id": "living-room",
@@ -252,7 +252,7 @@
         {
           "name": "Desk",
           "description": "A whopping great big business desk painted bright green.",
-          "requires": "glittery-key",
+          "requires": "rusty-key",
           "items": [
             {
               "id": "article-4",
@@ -285,7 +285,14 @@
           "name": "Drawers",
           "description": "A naval-looking set of drawers, complete with parrot insignia.",
           "requires": "",
-          "items": []
+          "items": [
+            {
+              "id": "mossy-key",
+              "name": "The Mossy Key",
+              "description": "A worn-down key covered in moss and sludge, possibly dredged up from a lake bottom.",
+              "requires": ""
+            }
+          ]
         },
         {
           "name": "Ottoman",
@@ -328,7 +335,7 @@
         "east": {},
         "south": {
           "id": "annex-of-evil",
-          "requires": "glittery-key"
+          "requires": "mossy-key"
         },
         "west": {}
       }

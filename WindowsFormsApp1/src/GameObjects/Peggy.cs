@@ -32,12 +32,17 @@ namespace PeggyTheGameApp.src.GameObjects
             _inventory.Add(item);
         }
 
+        public Item GetItemFromInventoryWithoutRemoving(string itemId)
+        {
+            return _inventory.Find(i => i.Id.ToLower().Equals(itemId.ToLower()));
+        }
+
         public Item RemoveItemFromInventoryById(string itemId)
         {
-            Item match = _inventory.Find(i => i.Id.ToLower().Equals(itemId.ToLower()));
+            Item match = GetItemFromInventoryWithoutRemoving(itemId);
             if (match != null)
             {
-                _inventory.Remove(match);
+                RemoveItemFromInventory(match);
             }
             return match;
         }
@@ -89,6 +94,21 @@ namespace PeggyTheGameApp.src.GameObjects
             return CurrentRoom.LookInContainer(containerName);
         }
 
+        public string LookInInventory()
+        {
+            if (!InventoryHasItems())
+            {
+                return "There's nothing in your inventory. Get cracking!";
+            }
+
+            string res = "You cautiously lift the corner of your satchel, peek inside, and see...\r\n";
+            foreach (Item i in _inventory)
+            {
+                res += $" - {i.Name}\r\n";
+            }
+            return res;
+        }
+
         public string TalkToCharacter(string characterName)
         {
             return CurrentRoom.TalkToCharacter(characterName);
@@ -109,13 +129,27 @@ namespace PeggyTheGameApp.src.GameObjects
                 }
             }
 
-            Item removedItem = matchContainer.RemoveItemByName(itemName);
-            if (removedItem != null)
+            Item item = matchContainer.GetItemWithoutRemoving(itemName);
+            if (item == null)
             {
-                AddItemToInventory(removedItem);
-                return $"{itemName} has been added to your inventory.\r\n";
+                return $"{takeFrom} doesn't have {itemName}.\r\n";
             }
-            return $"{takeFrom} doesn't have {itemName}.\r\n";
+
+            if (!string.IsNullOrEmpty(item.RequiresId))
+            {
+                if (!matchContainer.OwnsRequiredItem(item.RequiresId))
+                {
+                    return $"{matchContainer.Name} needs the {item.RequiresId} in return for the " +
+                           $"{item.Name} (try \"give {item.RequiresId} to {matchContainer.Name}\").\r\n";
+                }
+                else
+                {
+                    
+                }
+            }
+            Item removedItem = matchContainer.RemoveItemByName(itemName);
+            AddItemToInventory(removedItem);
+            return $"{itemName} has been added to your inventory.\r\n";
         }
 
         public string DropItemIn(string itemName, string dropIn)

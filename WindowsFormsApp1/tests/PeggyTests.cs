@@ -19,8 +19,8 @@ namespace PeggyTheGameApp.tests
 
         public PeggyTests()
         {
-            _goodTestItem = new Item("good-item-id", "A Good Item", "I am a good item.", "good-item-requires-id");
-            _badTestItem = new Item("bad-item-id", "A Bad Item", "I am a bad item.", "bad-item-requires-id");
+            _goodTestItem = new Item("good-item-id", "A Good Item", "I am a good item.");
+            _badTestItem = new Item("bad-item-id", "A Bad Item", "I am a bad item.");
             _testRoom = new Room("test-room", "Test Room", "A test room.");
             _testContainer = new Container("Test Container", "I am a test container.");
             _testCharacter = new Character("Test Character", "I am a test character.");

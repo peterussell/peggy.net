@@ -37,6 +37,20 @@ namespace PeggyTheGameApp.src.GameObjects
             return Items.ContainsKey(id);
         }
 
+        public Item GetItemWithoutRemoving(string name)
+        {
+            Item matchingItem = null;
+            foreach (KeyValuePair<string, Item> kv in Items)
+            {
+                if (kv.Value.Name.ToLower().Equals(name.ToLower()))
+                {
+                    matchingItem = kv.Value;
+                    return matchingItem;
+                }
+            }
+            return null;
+        }
+
         public Item RemoveItem(string id)
         {
             if (!HasItem(id))
@@ -50,20 +64,17 @@ namespace PeggyTheGameApp.src.GameObjects
 
         public Item RemoveItemByName(string name)
         {
-            Item matchingItem = null;
-            foreach (KeyValuePair<string, Item> kv in Items)
-            {
-                if (kv.Value.Name.ToLower().Equals(name.ToLower()))
-                {
-                    matchingItem = kv.Value;
-                    break;
-                }
-            }
+            Item matchingItem = GetItemWithoutRemoving(name);
             if (matchingItem != null)
             {
                 Items.Remove(matchingItem.Id);
             }
             return matchingItem;
+        }
+
+        public bool OwnsRequiredItem(string requiresId)
+        {
+            return Items.Keys.Contains(requiresId);
         }
     }
 }

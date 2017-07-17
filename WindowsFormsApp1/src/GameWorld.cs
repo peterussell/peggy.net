@@ -101,12 +101,10 @@ namespace PeggyTheGameApp.src
                 }
                 else
                 {
-                    Item requiredItem = Peggy.RemoveItemFromInventoryById(ar.RequiresId);
+                    Item requiredItem = Peggy.GetItemFromInventoryWithoutRemoving(ar.RequiresId);
                     ar.SatisfyRequiredItem(requiredItem);
                 }
             }
-
-            // TODO: if there are required items, check Peggy has them before allowing the transition.
 
             return Peggy.SetCurrentRoom(newRoom);
         }
@@ -139,6 +137,11 @@ namespace PeggyTheGameApp.src
         public string GiveItemTo(string itemName, string giveTo)
         {
             return Peggy.GiveItemTo(itemName, giveTo);
+        }
+
+        public string LookInInventory()
+        {
+            return Peggy.LookInInventory();
         }
     }
 }
