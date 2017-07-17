@@ -69,6 +69,23 @@ namespace PeggyTheGameApp.src.GameObjects
 
         public string LookInContainer(string containerName)
         {
+            if (string.IsNullOrEmpty(containerName))
+            {
+                return "Look in where?\r\n";
+            }
+
+            Container container = CurrentRoom.GetContainerByName(containerName);
+            if (container == null)
+            {
+                return $"There's no {containerName} you can look in here.\r\n";
+            }
+
+            // If the container requires an item to open/use it, check Peggy has it.
+            if (!string.IsNullOrEmpty(container.RequiresId) &&
+                !InventoryHasItem(container.RequiresId)) {
+                return $"You need the {container.RequiresId} to open the {container.Name}.\r\n";
+            }
+
             return CurrentRoom.LookInContainer(containerName);
         }
 

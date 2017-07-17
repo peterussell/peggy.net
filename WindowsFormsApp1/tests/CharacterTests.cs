@@ -60,7 +60,7 @@ namespace PeggyTheGameApp.tests
             Character c = new Character(JObject.Parse(json));
             Assert.Equal("Archibald", c.Name);
             Assert.Equal("A hulking giant of a woman with frazzled hair.", c.Description);
-            Assert.Equal("You look like you could do with some help, here - have a key.", c.TalkTo());
+            Assert.Contains("You look like you could do with some help, here - have a key.", c.TalkTo());
             Assert.True(c.HasItems());
 
             Item i = c.RemoveItem("article-3");

@@ -44,6 +44,45 @@ namespace PeggyTheGameApp.tests
         }
 
         [Fact]
+        public void TestLookInContainerWithRequiredItemAndPeggyHasItem()
+        {
+            Item ri = new Item("required-item", "Required Item", "This item is required.");
+            Item ci = new Item("contained-item", "Contained Item", "I am an item in a container.");
+            Container c = new Container("container-with-required-item", "Container with Required Item");
+            Room r = new Room("room", "Room", "A room.");
+            c.AddItem(ci);
+            c.AddRequiredItemById(ri.Id);
+            r.AddContainer(c);
+
+            Peggy p = new Peggy();
+            p.AddItemToInventory(ri);
+            p.SetCurrentRoom(r);
+            string res = p.LookInContainer(c.Name);
+
+            Assert.Equal("You peer into the container-with-required-item and see...\r\n" +
+                         " - Contained Item\r\n",
+                         res);
+        }
+
+        [Fact]
+        public void TestLookInContainerWithRequiredItemAndPeggyDoesNotHaveItem()
+        {
+            Item ri = new Item("required-item", "Required Item", "This item is required.");
+            Item ci = new Item("contained-item", "Contained Item", "I am an item in a container.");
+            Container c = new Container("container-with-required-item", "Container with Required Item");
+            Room r = new Room("room", "Room", "A room.");
+            c.AddItem(ci);
+            c.AddRequiredItemById(ri.Id);
+            r.AddContainer(c);
+
+            Peggy p = new Peggy();
+            p.SetCurrentRoom(r);
+            string res = p.LookInContainer(c.Name);
+
+            Assert.Equal($"You need the {ri.Id} to open the {c.Name}.\r\n", res);
+        }
+
+        [Fact]
         public void TestLoadContainerFromJson()
         {
             string json = @"{

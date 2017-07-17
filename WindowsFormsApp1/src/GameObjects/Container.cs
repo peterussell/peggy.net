@@ -49,5 +49,10 @@ namespace PeggyTheGameApp.src.GameObjects
             }
             return res;
         }
+
+        public void AddRequiredItemById(string requiredItemId)
+        {
+            RequiresId = requiredItemId;
+        }
     }
 }
