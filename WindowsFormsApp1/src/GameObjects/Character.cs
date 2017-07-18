@@ -16,7 +16,7 @@ namespace PeggyTheGameApp.src.GameObjects
         private const string _responseKey = "response";
         private const string _itemsKey = "items";
 
-        public Character(string name, string description)
+        public Character(string name, string description="")
         {
             Name = name;
             Description = description;

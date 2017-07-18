@@ -16,6 +16,7 @@ namespace PeggyTheGameApp.src
         public Peggy Peggy { get; private set; }
         private Dictionary<string, Room> _rooms;
         private string _startRoomId;
+        private EndGameCondition _endGameCondition;
 
         public GameWorld()
         {
@@ -33,7 +34,8 @@ namespace PeggyTheGameApp.src
 
             using (StreamReader sr = File.OpenText(fullPath))
             {
-                JObject map = (JObject)JToken.ReadFrom(new JsonTextReader(sr))["map"];
+                JToken file = JToken.ReadFrom(new JsonTextReader(sr));
+                JObject map = (JObject)file["map"];
 
                 foreach (var jRoom in map)
                 {
@@ -41,10 +43,33 @@ namespace PeggyTheGameApp.src
                     if (r.IsStartRoom) { _startRoomId = r.Id; }
                     _rooms.Add(r.Id, r);
                 }
+
+                LoadEndGameCondition((JObject)file["end-game"]);
             }
 
             // Put Peggy in the start location
             Peggy.SetCurrentRoom(_rooms[_startRoomId]);
+        }
+
+        /* The _endGameCondition field can be either a Character or Container, and contains
+         * an initial list of items. Each iteration of the game loop, the Character/Container
+         * specified in the game world will be checked to see whether they own those items.
+         * 
+         * If they own all the items specified in the end-game object, the game is complete.
+         */
+        private void LoadEndGameCondition(JObject jEndGame)
+        {
+            string entityType = (string)jEndGame["type"];
+            string name = (string)jEndGame["name"];
+            string endGameText = (string)jEndGame["end-game-text"];
+
+            List<string> requiredItems = new List<string>();
+            foreach (JToken jItem in JArray.Parse(jEndGame["has"].ToString()))
+            {
+                requiredItems.Add((string)jItem);
+            }
+
+            _endGameCondition = new EndGameCondition(entityType, name, requiredItems, endGameText);
         }
 
         public void MovePeggyToRoom(Room newRoom)
@@ -142,6 +167,59 @@ namespace PeggyTheGameApp.src
         public string LookInInventory()
         {
             return Peggy.LookInInventory();
+        }
+
+        public bool IsEndGameSatisfied()
+        {
+            ContainerBase actualEntity = null;
+
+            // NB. only support an end-game if Peggy is in the same room
+            // (ie. only check the current room for the end-game Character
+            // or container.
+            if (_endGameCondition.Type.Equals("character"))
+            {
+                actualEntity = Peggy.CurrentRoom.GetCharacterByName(_endGameCondition.EntityName);
+            }
+            else if (_endGameCondition.Type.Equals("container"))
+            {
+                actualEntity = Peggy.CurrentRoom.GetContainerByName(_endGameCondition.EntityName);
+            }
+
+            if (actualEntity == null)
+            {
+                // The end-game Character or Container isn't in Peggy's current room
+                return false;
+            }
+            
+            foreach (string requiredItem in _endGameCondition.RequiredItems) {
+                if (!actualEntity.HasItemWithId(requiredItem))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public string GetEndGameText()
+        {
+            string res = $"{_endGameCondition.EntityName} sighs and says \"{_endGameCondition.EndGameText}\"\r\n";
+            return res;
+        }
+    }
+
+    class EndGameCondition
+    {
+        public string Type { get; private set; }
+        public string EntityName { get; private set; }
+        public List<string> RequiredItems { get; private set; }
+        public string EndGameText { get; private set; }
+
+        public EndGameCondition(string type, string entityName, List<string> requiredItems, string endGameText)
+        {
+            Type = type;
+            EntityName = entityName;
+            RequiredItems = requiredItems;
+            EndGameText = endGameText;
         }
     }
 }

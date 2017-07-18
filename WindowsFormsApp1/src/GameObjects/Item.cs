@@ -19,7 +19,7 @@ namespace PeggyTheGameApp.src.GameObjects
         private const string _descriptionKey = "description";
         private const string _requiresKey = "requires";
 
-        public Item(string id, string name, string desc, string requires = "")
+        public Item(string id, string name="", string desc="", string requires = "")
         {
             Id = id;
             Name = name;

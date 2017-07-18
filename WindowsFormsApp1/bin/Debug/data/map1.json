@@ -1,7 +1,19 @@
 ﻿{
+  "end-game": {
+    "type": "character",
+    "name": "Dr. Beaverman",
+    "end-game-text": "It seems we have an understanding. Let's just forget this ever happened.",
+    "has": [
+      "article-1",
+      "article-2",
+      "article-3",
+      "article-4",
+      "article-5"
+    ]
+  },
   "map": {
     "front-porch": {
-      "is-start-room":  true,
+      "is-start-room": true,
       "friendly-name": "Front Porch",
       "description": "A run-down awning with flickering light and chipped-paint door.",
       "containers": [],
@@ -342,7 +354,7 @@
     },
     "annex-of-evil": {
       "friendly-name": "Annex of Evil",
-      "description":  "Finally, something interesting. It's obvious Bronies have been here.",
+      "description": "Finally, something interesting. It's obvious Bronies have been here.",
       "containers": [],
       "characters": [
         {

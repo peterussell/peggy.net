@@ -41,6 +41,16 @@ namespace PeggyTheGameApp.src
                     return "Use your words.\r\n";
             }
         }
+        
+        public bool CheckForEndGame()
+        {
+            return _world.IsEndGameSatisfied();
+        }
+
+        public string GetEndGameText()
+        {
+            return _world.GetEndGameText();
+        }
 
         private string HandleGo(string[] tokens)
         {

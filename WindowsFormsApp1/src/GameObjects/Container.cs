@@ -16,7 +16,7 @@ namespace PeggyTheGameApp.src.GameObjects
         private const string _requiresKey = "requires";
         private const string _itemsKey = "items";
 
-        public Container(string name, string description)
+        public Container(string name, string description="")
         {
             Name = name;
             Description = description;
